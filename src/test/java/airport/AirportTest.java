@@ -6,8 +6,8 @@ import org.junit.Assert;
 public class AirportTest {
     @Test
      public void testlandPlane() {
-        Plane planeOne = new Plane("planeOne");
+        Plane plane = new Plane("planeOne");
         Airport airportOne = new Airport();
-        Assert.assertEquals(airportOne.land(planeOne),"planeOne has landed");
+        Assert.assertEquals(airportOne.land(plane),"planeOne has landed");
     }
 }
