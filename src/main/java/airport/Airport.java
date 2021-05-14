@@ -23,10 +23,11 @@ public class Airport {
             return String.format("sorry %s has already landed",plane.name);
         }else{
             hangarList.add(plane);
+            plane.isLanded = true;
             return String.format("%s has landed",plane.name);
         }
-
     }
+
     public String takeOff(Plane plane){
         if(hangarList.contains(plane)){
             hangarList.remove(plane);
@@ -36,10 +37,5 @@ public class Airport {
         else {
             return String.format("sorry %s is not at airport",plane.name);
         }
-
-
-
-        }
-
     }
-
+}
