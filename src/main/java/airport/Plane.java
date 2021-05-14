@@ -1,7 +1,4 @@
 package airport;
-import java.util.Dictionary;
-
-import java.util.Hashtable;
 
 public class Plane {
     public String name;
@@ -9,7 +6,7 @@ public class Plane {
 
     Plane(String name){
         this.name = name;
-        this.isLanded = true;
+        this.isLanded = false;
     }
 
 }

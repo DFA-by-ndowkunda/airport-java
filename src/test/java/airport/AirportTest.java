@@ -5,7 +5,7 @@ import org.junit.Assert;
 
 public class AirportTest {
     @Test
-     public void testlandPlane() {
+    public void testlandPlane() {
         Plane plane = new Plane("planeOne");
         Airport airportOne = new Airport(1);
         Assert.assertEquals(airportOne.land(plane),"planeOne has landed");
@@ -38,16 +38,16 @@ public class AirportTest {
     @Test
     public void testInvalidLandPlane() {
         Plane plane = new Plane("planeOne");
-        Airport airportOne = new Airport(3);
-        airportOne.land(plane);
-        Assert.assertEquals(airportOne.land(plane),"sorry planeOne has already landed");
+        Airport airportFive = new Airport(3);
+        airportFive.land(plane);
+        Assert.assertEquals(airportFive.land(plane),"sorry planeOne has already landed");
     }
     @Test
     public void testLandPlaneAfterTakeOff() {
         Plane plane = new Plane("planeOne");
-        Airport airportOne = new Airport(3);
-        airportOne.land(plane);
-        airportOne.takeOff(plane);
-        Assert.assertEquals(airportOne.land(plane),"sorry planeOne has already landed");
+        Airport airportSix = new Airport(3);
+        airportSix.land(plane);
+        airportSix.takeOff(plane);
+        Assert.assertEquals(airportSix.land(plane),"planeOne has landed");
     }
 }
