@@ -74,7 +74,7 @@ Planes that have landed must be at an airport
 
 ```
 ### Domain model 
-![functional representation model](airport-java/media/docs/domain-model.png)
+![functional representation model](media/docs/domain-model.png)
 
 ### Tests
 
