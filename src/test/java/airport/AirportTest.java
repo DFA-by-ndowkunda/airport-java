@@ -1,53 +1,98 @@
 package airport;
 
-import org.junit.Test;
-import org.junit.Assert;
+import org.junit.jupiter.api.*;
+import org.mockito.Mockito;
+import static org.mockito.Mockito.*;
 
 public class AirportTest {
+    Airport gatwick;
+    Plane mockPlane;
+    Plane mockPlane2;
+    Plane mockPlane3;
+    Plane mockPlane4;
+    Plane mockPlane5;
+    Weather mockWeather;
+    @BeforeEach
+    public void setUp() {
+         mockPlane = Mockito.spy(new Plane("airbusA320"));
+         mockPlane2 = Mockito.spy(new Plane("airbusA321"));
+         gatwick = new Airport(1);
+         mockWeather =  mock(Weather.class);
+         when(mockWeather.isStorm()).thenReturn(false);
+    }
+
     @Test
-    public void testlandPlane() {
-        Plane plane = new Plane("planeOne");
-        Airport airportOne = new Airport(1);
-        Assert.assertEquals(airportOne.land(plane),"planeOne has landed");
+    public void defaultCapacityReached() {
+        gatwick.land(mockPlane.name,mockWeather);
+        gatwick.land(mockPlane2.name,mockWeather);
+        when(mockWeather.isStorm()).thenReturn(false);
+        Assertions.assertEquals(1,gatwick.countHangar());
+    }
+
+    @Test
+    public void defaultCapacityAltered() {
+        gatwick.maxCapacity = 2;
+        gatwick.land(mockPlane.name,mockWeather);
+        gatwick.land(mockPlane2.name,mockWeather);
+        when(mockWeather.isStorm()).thenReturn(false);
+        Assertions.assertEquals(2,gatwick.countHangar());
+    }
+
+    @Test
+    public void landPlane() {
+        when(mockWeather.isStorm()).thenReturn(false);
+        Assertions.assertEquals("airbusA320 has landed",gatwick.land(mockPlane.name,mockWeather));
+    }
+
+    @Test
+    public void landTwiceError()  {
+        gatwick.land(mockPlane.name,mockWeather);
+        when(mockWeather.isStorm()).thenReturn(false);
+        Assertions.assertEquals("airbusA320 has already landed", gatwick.land(mockPlane.name,mockWeather));
+    }
+
+    @Test
+    public void landCapacityReachedError()  {
+        gatwick.land(mockPlane.name,mockWeather);
+        when(mockWeather.isStorm()).thenReturn(false);
+        Assertions.assertEquals("airbusA321 cannot land, airport full", gatwick.land(mockPlane2.name,mockWeather));
+    }
+
+    @Test
+    public void takeOff() {
+        gatwick.land(mockPlane.name,mockWeather);
+        when(mockWeather.isStorm()).thenReturn(false);
+        Assertions.assertEquals("airbusA320 has left airport",gatwick.takeOff(mockPlane.name,mockWeather));
+    }
+
+    @Test
+    public void takeOffTwiceError() {
+        gatwick.land(mockPlane.name,mockWeather);
+        gatwick.takeOff(mockPlane.name,mockWeather);
+
+        Assertions.assertEquals("airbusA320 not at airport",gatwick.takeOff(mockPlane.name,mockWeather));
     }
     @Test
-    public void testdefaultCapacity() {
-        Plane plane = new Plane("planeOne");
-        Plane planeTwo = new Plane("planeTwo");
-        Plane planeThree = new Plane("planeThree");
-        Airport airportTwo = new Airport(2);
-        airportTwo.land(plane);
-        airportTwo.land(planeTwo);
-        airportTwo.land(planeThree);
-        Assert.assertEquals(airportTwo.land(planeThree),"planeThree cannot land, airport full");
+    public void landStormyWeatherError() {
+        when(mockWeather.isStorm()).thenReturn(true);
+        Assertions.assertEquals("airbusA320 cannot land yet, poor weather",gatwick.land(mockPlane.name,mockWeather));
     }
     @Test
-    public void testPlaneTakeOff() {
-        Plane plane = new Plane("planeOne");
-        Airport airportThree = new Airport(2);
-        airportThree.land(plane);
-        Assert.assertEquals(airportThree.takeOff(plane),"planeOne has left airport");
+    public void takeOffStormyWeatherError() {
+        when(mockWeather.isStorm()).thenReturn(true);
+        Assertions.assertEquals("airbusA320 cannot land yet, poor weather",gatwick.takeOff(mockPlane.name,mockWeather));
     }
     @Test
-    public void testInavlidPlaneTakeOff() {
-        Plane plane = new Plane("planeOne");
-        Airport airportFour = new Airport(2);
-        airportFour.takeOff(plane);
-        Assert.assertEquals(airportFour.takeOff(plane),"sorry planeOne is not at airport");
-    }
-    @Test
-    public void testInvalidLandPlane() {
-        Plane plane = new Plane("planeOne");
-        Airport airportFive = new Airport(3);
-        airportFive.land(plane);
-        Assert.assertEquals(airportFive.land(plane),"sorry planeOne has already landed");
-    }
-    @Test
-    public void testLandPlaneAfterTakeOff() {
-        Plane plane = new Plane("planeOne");
-        Airport airportSix = new Airport(3);
-        airportSix.land(plane);
-        airportSix.takeOff(plane);
-        Assert.assertEquals(airportSix.land(plane),"planeOne has landed");
+    void countPlanesInHangar() {
+        mockPlane3 = Mockito.spy(new Plane("airbusA322"));
+        mockPlane4 = Mockito.spy(new Plane("airbusA323"));
+        mockPlane5 = Mockito.spy(new Plane("airbusA324"));
+        gatwick.maxCapacity = 5;
+        gatwick.land(mockPlane.name,mockWeather);
+        gatwick.land(mockPlane2.name,mockWeather);
+        gatwick.land(mockPlane3.name,mockWeather);
+        gatwick.land(mockPlane4.name,mockWeather);
+        gatwick.land(mockPlane5.name,mockWeather);
+        Assertions.assertEquals(5, gatwick.countHangar());
     }
 }
