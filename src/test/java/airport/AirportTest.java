@@ -17,7 +17,7 @@ public class AirportTest {
          when(mockWeather.isStorm()).thenReturn(false);
          gatwick = new Airport(1);
     }
-//Acceptance Criteria
+//Standard Acceptance Criteria
     @Nested
     @DisplayName("Test Airport Capacity")
     class AirportCapacity {
@@ -73,7 +73,7 @@ public class AirportTest {
         }
     }
 
-// Extended Criteria
+// Extended Acceptance Criteria
     @Nested
     @DisplayName("Test Stormy Weather Condition")
     class ChangeWeatherToStormy {
@@ -82,6 +82,7 @@ public class AirportTest {
             when(mockWeather.isStorm()).thenReturn(true);
             Assertions.assertEquals("airbusA320 cannot land yet, poor weather",gatwick.land(mockPlane.name,mockWeather));
         }
+
         @Test
         public void takeOffStormyWeatherError() {
             when(mockWeather.isStorm()).thenReturn(true);
@@ -102,6 +103,7 @@ public class AirportTest {
             mockPlane5 = Mockito.spy(new Plane("airbusA324"));
             gatwick.maxCapacity = 5;
         }
+
         @Test
         void countPlanesInHangar() {
             gatwick.land(mockPlane.name,mockWeather);

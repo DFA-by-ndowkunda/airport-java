@@ -8,6 +8,6 @@ class PlaneTest {
     @Test
     void planeNameExists() {
         Plane plane = new Plane("airbusA320");
-        Assertions.assertEquals("airbusA320",plane.name);
+        Assertions.assertEquals("airbusA320",plane.getName());
     }
 }

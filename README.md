@@ -5,6 +5,7 @@ A redo of the airport challenge in Java, demostrating knowledge in Java and TDD 
 ### Built With
 
 * [Gradle](https://docs.gradle.org/current/userguide/userguide.html)
+* [Mockito](https://site.mockito.org/)
 
 ## Getting Started
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
@@ -13,14 +14,12 @@ These instructions will get you a copy of the project up and running on your loc
 
 To clone and run this application, you'll need;
 
-Git
+* [Git](https://git-scm.com/downloads)
 
-Node.js (which comes with npm) installed on your computer.
-or 
-IDE (intellj used to build this project)
+* IDE ([intellj](https://www.jetbrains.com/idea/) recommended)
 
 ### Installation
-```markdown
+```bash
 From your command line:
 
 # Clone this repository
@@ -76,25 +75,52 @@ Planes that have landed must be at an airport
 ### Domain model 
 ![functional representation model](media/docs/domain-model.png)
 
-### Tests
+## Sample Tests
 
-This project uses junit for its unit tests
+This project uses junit5 for its unit tests and mockito to mock other class dependencies for the airport class shown below 
+
+### Test Setup
 
 ```java
-//Airport class unit tests
+public class AirportTest {
+    Airport gatwick;
+    Plane mockPlane;
+    Plane mockPlane2;
+    Weather mockWeather;
 
+    @BeforeEach
+    public void setUp() {
+        mockPlane = Mockito.spy(new Plane("airbusA320"));
+        mockPlane2 = Mockito.spy(new Plane("airbusA321"));
+        mockWeather = mock(Weather.class);
+        when(mockWeather.isStorm()).thenReturn(false);
+        gatwick = new Airport(1);
+    }
+}
+```
+### Nested Test Classes
+
+Within the AirportTest Class tests for the acceptance criterias have been separated into their own set of nested classes.
+Shown below are the set of tests which must pass to demonstrate the airport capacity criteria has been met. 
+
+```java
+@Nested
+@DisplayName("Test Airport Capacity")
+class AirportCapacity {
+    @Test
+    public void defaultCapacityReached() {
+        gatwick.land(mockPlane.name, mockWeather);
+        gatwick.land(mockPlane2.name, mockWeather);
+        Assertions.assertEquals(1, gatwick.countHangar());
+    }
+
+    @Test
+    public void defaultCapacityAltered() {
+        gatwick.maxCapacity = 2;
+        gatwick.land(mockPlane.name, mockWeather);
+        gatwick.land(mockPlane2.name, mockWeather);
+        Assertions.assertEquals(2, gatwick.countHangar());
+    }
+}
 ```
 
-## Usage
-
-### User Interactions
-
-Demo of landing a plane
-![]()
-
-Demo of a plane take off
-![]()
-
-## Acknowledgements
-
--
