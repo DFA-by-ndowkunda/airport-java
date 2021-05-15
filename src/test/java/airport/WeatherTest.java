@@ -1,29 +1,25 @@
 package airport;
 
-import org.junit.Before;
-import org.junit.Test;
 import org.junit.jupiter.api.*;
 import org.mockito.Mockito;
 
 public class WeatherTest {
-    Weather weather;
+    Weather spyWeather;
 
-    @Before
+    @BeforeEach
     public void setUp() {
-        weather = Mockito.spy(new Weather());
+        spyWeather = Mockito.spy(new Weather());
     }
 
     @Test
-    public void testTrueOutcome(){
-        Mockito.doReturn(true).when(weather).isStorm();
-        Assertions.assertTrue(weather.isStorm());
+    public void isStormTrueOutcome(){
+        Mockito.doReturn(true).when(spyWeather).isStorm();
+        Assertions.assertTrue(spyWeather.isStorm());
     }
 
     @Test
-    public void testFalseOutcome(){
-        Mockito.doReturn(false).when(weather).isStorm();
-        Assertions.assertFalse(weather.isStorm());
+    public void isStormFalseOutcome(){
+        Mockito.doReturn(false).when(spyWeather).isStorm();
+        Assertions.assertFalse(spyWeather.isStorm());
     }
-
-
 }

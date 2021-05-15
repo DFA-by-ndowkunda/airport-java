@@ -1,4 +1,11 @@
-airport/AirportTest.java
- airport.AirportTest
 airport/WeatherTest.java
  airport.WeatherTest
+airport/AirportTest.java
+ airport.AirportTest
+ airport.AirportTest$AirportCapacity
+ airport.AirportTest$ChangeWeatherToStormy
+ airport.AirportTest$CountPlanes
+ airport.AirportTest$LandPlane
+ airport.AirportTest$TakeOff
+airport/PlaneTest.java
+ airport.PlaneTest
