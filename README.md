@@ -1,7 +1,7 @@
 # airport-java-challenge
 ## About
 
-A redo of the airport challenge in Java, demostrating knowledge in Java and TDD process in java.
+A redo of the airport challenge in Java, demonstrating knowledge in Java and TDD process in java.
 ### Built With
 
 * [Gradle](https://docs.gradle.org/current/userguide/userguide.html)
