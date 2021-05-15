@@ -25,7 +25,6 @@ public class AirportTest {
     public void defaultCapacityReached() {
         gatwick.land(mockPlane.name,mockWeather);
         gatwick.land(mockPlane2.name,mockWeather);
-        when(mockWeather.isStorm()).thenReturn(false);
         Assertions.assertEquals(1,gatwick.countHangar());
     }
 
@@ -34,34 +33,29 @@ public class AirportTest {
         gatwick.maxCapacity = 2;
         gatwick.land(mockPlane.name,mockWeather);
         gatwick.land(mockPlane2.name,mockWeather);
-        when(mockWeather.isStorm()).thenReturn(false);
         Assertions.assertEquals(2,gatwick.countHangar());
     }
 
     @Test
     public void landPlane() {
-        when(mockWeather.isStorm()).thenReturn(false);
         Assertions.assertEquals("airbusA320 has landed",gatwick.land(mockPlane.name,mockWeather));
     }
 
     @Test
     public void landTwiceError()  {
         gatwick.land(mockPlane.name,mockWeather);
-        when(mockWeather.isStorm()).thenReturn(false);
         Assertions.assertEquals("airbusA320 has already landed", gatwick.land(mockPlane.name,mockWeather));
     }
 
     @Test
     public void landCapacityReachedError()  {
         gatwick.land(mockPlane.name,mockWeather);
-        when(mockWeather.isStorm()).thenReturn(false);
         Assertions.assertEquals("airbusA321 cannot land, airport full", gatwick.land(mockPlane2.name,mockWeather));
     }
 
     @Test
     public void takeOff() {
         gatwick.land(mockPlane.name,mockWeather);
-        when(mockWeather.isStorm()).thenReturn(false);
         Assertions.assertEquals("airbusA320 has left airport",gatwick.takeOff(mockPlane.name,mockWeather));
     }
 
@@ -69,7 +63,6 @@ public class AirportTest {
     public void takeOffTwiceError() {
         gatwick.land(mockPlane.name,mockWeather);
         gatwick.takeOff(mockPlane.name,mockWeather);
-
         Assertions.assertEquals("airbusA320 not at airport",gatwick.takeOff(mockPlane.name,mockWeather));
     }
     @Test
