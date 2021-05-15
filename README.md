@@ -75,6 +75,15 @@ Planes that have landed must be at an airport
 ### Domain model 
 ![functional representation model](media/docs/domain-model.png)
 
+# Tests
+
+## Run Tests
+```bash
+# inside root directory Airport-java
+gradlew test
+```
+
+
 ## Sample Tests
 
 This project uses junit5 for its unit tests and mockito to mock other class dependencies for the airport class shown below 
